@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import NavBar from "./components/NavBar";
 import Main from "./components/Main";
 import Box from "./components/Box";
@@ -6,9 +6,7 @@ import MoviesList from "./components/MoviesList";
 import WatchedSummary from "./components/WatchedSummary";
 import WatchedMoviesList from "./components/WatchedMoviesList";
 import MoviesResultsNumber from "./components/MoviesResultsNumber";
-import Loader from "./components/Loader";
-import ErrorMessage from "./components/ErrorMessage";
-/* const tempMovieData = [
+const tempMovieData = [
   {
     imdbID: "tt1375666",
     Title: "Inception",
@@ -52,7 +50,7 @@ const tempWatchedData = [
     imdbRating: 8.5,
     userRating: 9,
   },
-]; */
+];
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -61,35 +59,9 @@ const tempWatchedData = [
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-const KEY = "572588f4";
-
 export default function App() {
-  const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    const fetchMovies = async (query = "mommy") => {
-      try {
-        setIsLoading(true);
-        const res = await fetch(
-          `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
-        );
-
-        if (!res.ok) throw new Error("Internet connection lost");
-
-        const data = await res.json();
-        setMovies(data.Search);
-        setIsLoading(false);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchMovies();
-  }, []);
+  const [movies, setMovies] = useState(tempMovieData);
+  const [watched, setWatched] = useState(tempWatchedData);
 
   return (
     <>
@@ -104,9 +76,7 @@ export default function App() {
       <Main>
         <Box>
           {/* fix prop drilling with component composition */}
-          {isLoading && <Loader />}
-          {!isLoading && !error && <MoviesList movies={movies} />}
-          {error && <ErrorMessage message={error} />}
+          <MoviesList movies={movies} />
         </Box>
         <Box>
           <>
