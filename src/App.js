@@ -70,20 +70,23 @@ export default function App() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchMovies = async (query = "mommy") => {
+    const fetchMovies = async (query = "inception") => {
       try {
         setIsLoading(true);
         const res = await fetch(
           `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
         );
 
+        const data = await res.json();
         if (!res.ok) throw new Error("Internet connection lost");
 
-        const data = await res.json();
+        if (data.Response === "False") throw new Error("Movie not found");
+
         setMovies(data.Search);
         setIsLoading(false);
       } catch (err) {
         setError(err.message);
+        /* console.log(err); */
       } finally {
         setIsLoading(false);
       }

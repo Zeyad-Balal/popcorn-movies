@@ -1,5 +1,5 @@
 const ErrorMessage = ({ message }) => {
-  return <p className="error">⛔connection lost</p>;
+  return <p className="error">{message}</p>;
 };
 
 export default ErrorMessage;
