@@ -1,11 +1,11 @@
-import Search from "./Search";
 import Logo from "./Logo";
+/* import { useState } from "react"; */
 
 const NavBar = ({ children }) => {
   return (
     <nav className="nav-bar">
       <Logo />
-      <Search />
+      {/*  <Search query={query} setQuery={setQuery} /> */}
       {children}
     </nav>
   ); //fix prop drilling with component composition

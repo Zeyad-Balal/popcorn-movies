@@ -8,6 +8,8 @@ import WatchedMoviesList from "./components/WatchedMoviesList";
 import MoviesResultsNumber from "./components/MoviesResultsNumber";
 import Loader from "./components/Loader";
 import ErrorMessage from "./components/ErrorMessage";
+import Search from "./components/Search";
+
 /* const tempMovieData = [
   {
     imdbID: "tt1375666",
@@ -64,15 +66,35 @@ const tempWatchedData = [
 const KEY = "572588f4";
 
 export default function App() {
+  const [query, setQuery] = useState("");
+
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
+  /*
+  
+  //just trial ...
   useEffect(() => {
-    const fetchMovies = async (query = "inception") => {
+    console.log("Initial render only");
+  }, []);
+
+  useEffect(() => {
+    console.log("After every render");
+  });
+
+  console.log("During");
+
+  useEffect(() => {
+    console.log("D");
+  }, [query]);
+ */
+  useEffect(() => {
+    const fetchMovies = async (temp_query = "interstellar") => {
       try {
         setIsLoading(true);
+        setError("");
         const res = await fetch(
           `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
         );
@@ -92,7 +114,7 @@ export default function App() {
       }
     };
     fetchMovies();
-  }, []);
+  }, [query]);
 
   return (
     <>
@@ -101,6 +123,7 @@ export default function App() {
       <NavBar>
         {/* fix prop drilling with component composition */}
         <MoviesResultsNumber movies={movies} />
+        <Search query={query} setQuery={setQuery} />
       </NavBar>
 
       {/* Main page content */}

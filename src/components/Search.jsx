@@ -1,7 +1,9 @@
-import { useState } from "react";
+/* import { useState } from "react"; */
 //NavBar's component
-const Search = () => {
+const Search = ({ query, setQuery }) => {
+  /* 
   const [query, setQuery] = useState("");
+   */
   return (
     <input
       className="search"
