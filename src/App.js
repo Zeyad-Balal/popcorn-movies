@@ -74,7 +74,6 @@ export default function App() {
   const [error, setError] = useState("");
 
   /*
-  
   //just trial ...
   useEffect(() => {
     console.log("Initial render only");
@@ -113,6 +112,13 @@ export default function App() {
         setIsLoading(false);
       }
     };
+
+    if (!query.length) {
+      setMovies([]);
+      setError("");
+      return;
+    }
+
     fetchMovies();
   }, [query]);
 
