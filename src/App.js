@@ -9,6 +9,7 @@ import MoviesResultsNumber from "./components/MoviesResultsNumber";
 import Loader from "./components/Loader";
 import ErrorMessage from "./components/ErrorMessage";
 import Search from "./components/Search";
+import MovieDetails from "./components/MovieDetails";
 
 /* const tempMovieData = [
   {
@@ -64,6 +65,7 @@ const tempWatchedData = [
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 const KEY = "572588f4";
+const m_id = "tt1375666";
 
 export default function App() {
   const [query, setQuery] = useState("");
@@ -72,6 +74,7 @@ export default function App() {
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [selectedId, setSelectedId] = useState(null);
 
   /*
   //just trial ...
@@ -89,6 +92,16 @@ export default function App() {
     console.log("D");
   }, [query]);
  */
+
+  //method which get movie id to display its details on right box
+  const handleSelectedMovie = (id) => {
+    setSelectedId((selectedId) => (id === selectedId ? null : id));
+  };
+
+  const handleClosedMovie = () => {
+    setSelectedId(null);
+  };
+
   useEffect(() => {
     const fetchMovies = async (temp_query = "interstellar") => {
       try {
@@ -102,7 +115,7 @@ export default function App() {
         if (!res.ok) throw new Error("Internet connection lost");
 
         if (data.Response === "False") throw new Error("Movie not found");
-
+        //console.log(data.Search);
         setMovies(data.Search);
         setIsLoading(false);
       } catch (err) {
@@ -137,14 +150,23 @@ export default function App() {
         <Box>
           {/* fix prop drilling with component composition */}
           {isLoading && <Loader />}
-          {!isLoading && !error && <MoviesList movies={movies} />}
+          {!isLoading && !error && (
+            <MoviesList movies={movies} onSelect={handleSelectedMovie} />
+          )}
           {error && <ErrorMessage message={error} />}
         </Box>
         <Box>
-          <>
-            <WatchedSummary watched={watched} />
-            <WatchedMoviesList watched={watched} />
-          </>
+          {selectedId ? (
+            <MovieDetails
+              selectedId={selectedId}
+              handleClosedMovie={handleClosedMovie}
+            />
+          ) : (
+            <>
+              <WatchedSummary watched={watched} />
+              <WatchedMoviesList watched={watched} />
+            </>
+          )}
         </Box>
       </Main>
     </>
