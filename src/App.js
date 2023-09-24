@@ -92,6 +92,11 @@ export default function App() {
     console.log("D");
   }, [query]);
  */
+  //method handle to delete a movie to watched list
+
+  const handleDeleteWatched = (id) => {
+    setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
+  };
 
   //method handle to add a movie to watched list
   const handleAddWatched = (movie) => {
@@ -167,11 +172,15 @@ export default function App() {
               selectedId={selectedId}
               handleClosedMovie={handleClosedMovie}
               onAddWatched={handleAddWatched}
+              watched={watched}
             />
           ) : (
             <>
               <WatchedSummary watched={watched} />
-              <WatchedMoviesList watched={watched} />
+              <WatchedMoviesList
+                watched={watched}
+                onDeleteWatched={handleDeleteWatched}
+              />
             </>
           )}
         </Box>

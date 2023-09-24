@@ -3,11 +3,22 @@ import StarRating from "./StarRating";
 import Loader from "./Loader";
 const KEY = "572588f4";
 
-const MovieDetails = ({ selectedId, handleClosedMovie, onAddWatched }) => {
+const MovieDetails = ({
+  selectedId,
+  handleClosedMovie,
+  onAddWatched,
+  watched,
+}) => {
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState("");
 
+  const isWatched = watched.map((movie) => movie.imdbID).includes(selectedId);
+  /* console.log(isWatched); */
+
+  const watchUserRating = watched.find(
+    (movie) => movie.imdbID === selectedId
+  )?.userRating;
   //destructuring...
   const {
     Title: title,
@@ -74,15 +85,25 @@ const MovieDetails = ({ selectedId, handleClosedMovie, onAddWatched }) => {
           </header>
           <section>
             <div className="rating">
-              <StarRating
-                maxRating={10}
-                size={24}
-                onSetRating={setUserRating}
-              />
-              {userRating > 0 && (
-                <button className="btn-add" onClick={handleAdd}>
-                  + Add to Watching List
-                </button>
+              {!isWatched ? (
+                <>
+                  <StarRating
+                    maxRating={10}
+                    size={24}
+                    onSetRating={setUserRating}
+                  />
+                  {userRating > 0 && (
+                    <button className="btn-add" onClick={handleAdd}>
+                      + Add to Watching List
+                    </button>
+                  )}
+                </>
+              ) : (
+                <p>
+                  <em>
+                    you already rated this movie with {watchUserRating} ⭐
+                  </em>
+                </p>
               )}
             </div>
             <p>
