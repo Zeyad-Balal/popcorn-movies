@@ -55,7 +55,8 @@ const tempWatchedData = [
     imdbRating: 8.5,
     userRating: 9,
   },
-]; */
+];
+*/
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
@@ -91,6 +92,11 @@ export default function App() {
     console.log("D");
   }, [query]);
  */
+
+  //method handle to add a movie to watched list
+  const handleAddWatched = (movie) => {
+    setWatched((watched) => [...watched, movie]);
+  };
 
   //method which get movie id to display its details on right box
   const handleSelectedMovie = (id) => {
@@ -160,6 +166,7 @@ export default function App() {
             <MovieDetails
               selectedId={selectedId}
               handleClosedMovie={handleClosedMovie}
+              onAddWatched={handleAddWatched}
             />
           ) : (
             <>

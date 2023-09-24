@@ -3,9 +3,10 @@ import StarRating from "./StarRating";
 import Loader from "./Loader";
 const KEY = "572588f4";
 
-const MovieDetails = ({ selectedId, handleClosedMovie }) => {
+const MovieDetails = ({ selectedId, handleClosedMovie, onAddWatched }) => {
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [userRating, setUserRating] = useState("");
 
   //destructuring...
   const {
@@ -19,6 +20,19 @@ const MovieDetails = ({ selectedId, handleClosedMovie }) => {
     Genre: genre,
     Actors: actors,
   } = movie;
+
+  const handleAdd = () => {
+    const newWatchedMovie = {
+      imdbID: selectedId,
+      title,
+      poster,
+      imdbRating: Number(imdbRating),
+      runtime: Number(runtime.split("").at(0)),
+      userRating,
+    };
+    onAddWatched(newWatchedMovie);
+    handleClosedMovie();
+  };
 
   useEffect(() => {
     const getMovieDetails = async () => {
@@ -57,9 +71,20 @@ const MovieDetails = ({ selectedId, handleClosedMovie }) => {
                 {imdbRating} IMDb Rating
               </p>
             </div>
-            <StarRating maxRating={10} size={24} />
           </header>
           <section>
+            <div className="rating">
+              <StarRating
+                maxRating={10}
+                size={24}
+                onSetRating={setUserRating}
+              />
+              {userRating > 0 && (
+                <button className="btn-add" onClick={handleAdd}>
+                  + Add to Watching List
+                </button>
+              )}
+            </div>
             <p>
               <em> {plot} </em>
             </p>
@@ -68,7 +93,6 @@ const MovieDetails = ({ selectedId, handleClosedMovie }) => {
           </section>
         </>
       )}
-      ;
     </div>
   );
 };
