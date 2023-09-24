@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-StarRating.prototype = {
+/* StarRating.prototype = {
   maxRating: PropTypes.number.isRequired,
   defaultRating: PropTypes.number,
   color: PropTypes.string,
@@ -10,7 +10,7 @@ StarRating.prototype = {
   className: PropTypes.string,
   onSetRating: PropTypes.func,
 };
-
+ */
 const containerStyle = {
   display: "flex",
   gap: "16px",

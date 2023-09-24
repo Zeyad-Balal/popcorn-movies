@@ -69,7 +69,6 @@ const m_id = "tt1375666";
 
 export default function App() {
   const [query, setQuery] = useState("");
-
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -126,6 +125,7 @@ export default function App() {
       }
     };
 
+    //handling empty search bar case to avoid "this movie not found error"
     if (!query.length) {
       setMovies([]);
       setError("");
