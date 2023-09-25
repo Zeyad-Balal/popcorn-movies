@@ -65,6 +65,13 @@ const MovieDetails = ({
     //to avoid undefined
     if (!title) return;
     document.title = `Movie | ${title}`;
+
+    //return a cleanup function to remove the movie title when exit movie details
+    //run after a component unmounted...
+    //it may remember a movie name cause of closure property in JS...
+    return function () {
+      document.title = "Movies Popcorn";
+    };
   }, [title]);
 
   return (

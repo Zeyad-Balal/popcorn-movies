@@ -113,12 +113,15 @@ export default function App() {
   };
 
   useEffect(() => {
+    const controller = new AbortController();
     const fetchMovies = async (temp_query = "interstellar") => {
+      //add cleanup to remove the requests that we'll never need from network to avoid slow of fetching
       try {
         setIsLoading(true);
         setError("");
         const res = await fetch(
-          `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
+          `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
+          { signal: controller.signal }
         );
 
         const data = await res.json();
@@ -129,7 +132,9 @@ export default function App() {
         setMovies(data.Search);
         setIsLoading(false);
       } catch (err) {
-        setError(err.message);
+        if (err.name !== "AbortError") {
+          setError(err.message);
+        }
         /* console.log(err); */
       } finally {
         setIsLoading(false);
@@ -144,6 +149,10 @@ export default function App() {
     }
 
     fetchMovies();
+    //cleanup method
+    return function () {
+      controller.abort();
+    };
   }, [query]);
 
   return (
