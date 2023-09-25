@@ -60,6 +60,13 @@ const MovieDetails = ({
     getMovieDetails();
   }, [selectedId]);
 
+  //this effect to change the webpage title while clicking on a movie
+  useEffect(() => {
+    //to avoid undefined
+    if (!title) return;
+    document.title = `Movie | ${title}`;
+  }, [title]);
+
   return (
     <div className="details">
       {isLoading ? (
