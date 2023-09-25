@@ -112,6 +112,7 @@ export default function App() {
     setSelectedId(null);
   };
 
+  //fetching data
   useEffect(() => {
     const controller = new AbortController();
     const fetchMovies = async (temp_query = "interstellar") => {
@@ -147,7 +148,8 @@ export default function App() {
       setError("");
       return;
     }
-
+    //closing movie details when remove the name from search
+    /* handleClosedMovie(); */
     fetchMovies();
     //cleanup method
     return function () {

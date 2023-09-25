@@ -45,6 +45,24 @@ const MovieDetails = ({
     handleClosedMovie();
   };
 
+  //listen to keydown event to escape movie details when clicking on escape button
+  useEffect(() => {
+    const keydown_callback = (e) => {
+      if (e.code === "Escape") {
+        handleClosedMovie();
+      }
+    };
+
+    //add listener
+    document.addEventListener("keydown", keydown_callback);
+
+    //cleanup event listeners to avoid dozens of listeners we'll never use
+    return function () {
+      document.removeEventListener("keydown", keydown_callback);
+    };
+  }, [handleClosedMovie]);
+
+  //fetch movie details
   useEffect(() => {
     const getMovieDetails = async () => {
       setIsLoading(true);
