@@ -379,3 +379,93 @@ EMPTY STAR
 </svg>
 
 */
+/*/////////////////////////////////////////*/
+/*login style*/
+/* Login.css */
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  /* background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.8) 50%, black 100%),
+      url(../public/cima.jpg); */
+  background-image: url(../public/cinema-elements-red-background-with-copy-space.jpg);
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  text-align: left; /* Align text to the left within form groups */
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.login-form {
+  margin-left: 65%;
+  margin-top: 13%;
+}
+
+input[type="text"],
+input[type="password"] {
+  opacity: 0.5;
+  width: 65%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  outline: none;
+}
+
+label {
+  color: white;
+}
+
+h2 {
+  color: #4d0505;
+  margin-left: 25%;
+  font-weight: bolder;
+  font-size: 200%;
+}
+
+button {
+  /*   opacity: 0.8;
+ */
+  background-color: rgba(255, 255, 255, 0.7);
+  font-weight: bolder;
+
+  color: #4d0505;
+  border: none;
+  border-radius: 15px;
+  padding: 10px 15px;
+  cursor: pointer;
+  width: 22%;
+  font-size: 20px;
+  margin-left: 25%;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #789bc0;
+}
+.create {
+  margin-left: 15px;
+}
+
+.forget {
+  margin-right: 50px;
+}
+.forget-create-container {
+  margin-top: 100px;
+}
+a {
+  color: white;
+  margin-top: 100px;
+  margin-left: 50px;
+  font-size: 110%;
+}
