@@ -175,22 +175,23 @@ export default function App() {
 					{error && <ErrorMessage message={error} />}
 				</Box>
 				<Box>
-					{selectedId ? (
-						<MovieDetails
-							selectedId={selectedId}
-							handleClosedMovie={handleClosedMovie}
-							onAddWatched={handleAddWatched}
-							watched={watched}
-						/>
-					) : (
-						<>
-							<div className='box__heading'>
-								<WatchedSummary watched={watched} />
-							</div>
-							<WatchedMoviesList watched={watched} onDeleteWatched={handleDeleteWatched} />
-						</>
-					)}
+					<>
+						<div className='box__heading'>
+							<WatchedSummary watched={watched} />
+						</div>
+						<WatchedMoviesList watched={watched} onDeleteWatched={handleDeleteWatched} />
+					</>
 				</Box>
+				{selectedId ? (
+					<MovieDetails
+						selectedId={selectedId}
+						handleClosedMovie={handleClosedMovie}
+						onAddWatched={handleAddWatched}
+						watched={watched}
+					/>
+				) : (
+					<></>
+				)}
 			</Main>
 		</>
 	);
