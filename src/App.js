@@ -66,8 +66,8 @@ const tempWatchedData = [
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 const KEY = "572588f4";
-const m_id = "tt1375666";
-
+/* const m_id = "tt1375666";
+ */
 export default function App() {
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
@@ -163,8 +163,8 @@ export default function App() {
 
       <NavBar>
         {/* fix prop drilling with component composition */}
-        <MoviesResultsNumber movies={movies} />
         <Search query={query} setQuery={setQuery} />
+        <MoviesResultsNumber movies={movies} />
       </NavBar>
 
       {/* Main page content */}
