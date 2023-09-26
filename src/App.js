@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import NavBar from "./components/NavBar";
-import Main from "./components/Main";
-import Box from "./components/Box";
-import MoviesList from "./components/MoviesList";
-import WatchedSummary from "./components/WatchedSummary";
-import WatchedMoviesList from "./components/WatchedMoviesList";
-import MoviesResultsNumber from "./components/MoviesResultsNumber";
-import Loader from "./components/Loader";
-import ErrorMessage from "./components/ErrorMessage";
-import Search from "./components/Search";
-import MovieDetails from "./components/MovieDetails";
+import { useEffect, useState } from 'react';
+import NavBar from './components/NavBar';
+import Main from './components/Main';
+import Box from './components/Box';
+import MoviesList from './components/MoviesList';
+import WatchedSummary from './components/WatchedSummary';
+import WatchedMoviesList from './components/WatchedMoviesList';
+// import MoviesResultsNumber from './components/MoviesResultsNumber';
+import Loader from './components/Loader';
+import ErrorMessage from './components/ErrorMessage';
+import Search from './components/Search';
+import MovieDetails from './components/MovieDetails';
 
 /* const tempMovieData = [
   {
@@ -65,18 +65,18 @@ const tempWatchedData = [
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
-const KEY = "572588f4";
+const KEY = '572588f4';
 /* const m_id = "tt1375666";
  */
 export default function App() {
-  const [query, setQuery] = useState("");
-  const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [selectedId, setSelectedId] = useState(null);
+	const [query, setQuery] = useState('');
+	const [movies, setMovies] = useState([]);
+	const [watched, setWatched] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState('');
+	const [selectedId, setSelectedId] = useState(null);
 
-  /*
+	/*
   //just trial ...
   useEffect(() => {
     console.log("Initial render only");
@@ -92,110 +92,106 @@ export default function App() {
     console.log("D");
   }, [query]);
  */
-  //method handle to delete a movie to watched list
+	//method handle to delete a movie to watched list
 
-  const handleDeleteWatched = (id) => {
-    setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
-  };
+	const handleDeleteWatched = (id) => {
+		setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
+	};
 
-  //method handle to add a movie to watched list
-  const handleAddWatched = (movie) => {
-    setWatched((watched) => [...watched, movie]);
-  };
+	//method handle to add a movie to watched list
+	const handleAddWatched = (movie) => {
+		setWatched((watched) => [...watched, movie]);
+	};
 
-  //method which get movie id to display its details on right box
-  const handleSelectedMovie = (id) => {
-    setSelectedId((selectedId) => (id === selectedId ? null : id));
-  };
+	//method which get movie id to display its details on right box
+	const handleSelectedMovie = (id) => {
+		setSelectedId((selectedId) => (id === selectedId ? null : id));
+	};
 
-  const handleClosedMovie = () => {
-    setSelectedId(null);
-  };
+	const handleClosedMovie = () => {
+		setSelectedId(null);
+	};
 
-  //fetching data
-  useEffect(() => {
-    const controller = new AbortController();
-    const fetchMovies = async (temp_query = "interstellar") => {
-      //add cleanup to remove the requests that we'll never need from network to avoid slow of fetching
-      try {
-        setIsLoading(true);
-        setError("");
-        const res = await fetch(
-          `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
-          { signal: controller.signal }
-        );
+	//fetching data
+	useEffect(() => {
+		const controller = new AbortController();
+		const fetchMovies = async (temp_query = 'interstellar') => {
+			//add cleanup to remove the requests that we'll never need from network to avoid slow of fetching
+			try {
+				setIsLoading(true);
+				setError('');
+				const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=${query}`, {
+					signal: controller.signal,
+				});
 
-        const data = await res.json();
-        if (!res.ok) throw new Error("Internet connection lost");
+				const data = await res.json();
+				if (!res.ok) throw new Error('Internet connection lost');
 
-        if (data.Response === "False") throw new Error("Movie not found");
-        //console.log(data.Search);
-        setMovies(data.Search);
-        setIsLoading(false);
-      } catch (err) {
-        if (err.name !== "AbortError") {
-          setError(err.message);
-        }
-        /* console.log(err); */
-      } finally {
-        setIsLoading(false);
-      }
-    };
+				if (data.Response === 'False') throw new Error('Movie not found');
+				//console.log(data.Search);
+				setMovies(data.Search);
+				setIsLoading(false);
+			} catch (err) {
+				if (err.name !== 'AbortError') {
+					setError(err.message);
+				}
+				/* console.log(err); */
+			} finally {
+				setIsLoading(false);
+			}
+		};
 
-    //handling empty search bar case to avoid "this movie not found error"
-    if (!query.length) {
-      setMovies([]);
-      setError("");
-      return;
-    }
-    //closing movie details when remove the name from search
-    /* handleClosedMovie(); */
-    fetchMovies();
-    //cleanup method
-    return function () {
-      controller.abort();
-    };
-  }, [query]);
+		//handling empty search bar case to avoid "this movie not found error"
+		if (!query.length) {
+			setMovies([]);
+			setError('');
+			return;
+		}
+		//closing movie details when remove the name from search
+		/* handleClosedMovie(); */
+		fetchMovies();
+		//cleanup method
+		return function () {
+			controller.abort();
+		};
+	}, [query]);
 
-  return (
-    <>
-      {/* Nav Bar content */}
+	return (
+		<>
+			{/* Nav Bar content */}
 
-      <NavBar>
-        {/* fix prop drilling with component composition */}
-        <Search query={query} setQuery={setQuery} />
-        <MoviesResultsNumber movies={movies} />
-      </NavBar>
+			<NavBar>{/* <MoviesResultsNumber movies={movies} /> */}</NavBar>
 
-      {/* Main page content */}
-      <Main>
-        <Box>
-          {/* fix prop drilling with component composition */}
-          {isLoading && <Loader />}
-          {!isLoading && !error && (
-            <MoviesList movies={movies} onSelect={handleSelectedMovie} />
-          )}
-          {error && <ErrorMessage message={error} />}
-        </Box>
-        <Box>
-          {selectedId ? (
-            <MovieDetails
-              selectedId={selectedId}
-              handleClosedMovie={handleClosedMovie}
-              onAddWatched={handleAddWatched}
-              watched={watched}
-            />
-          ) : (
-            <>
-              <WatchedSummary watched={watched} />
-              <WatchedMoviesList
-                watched={watched}
-                onDeleteWatched={handleDeleteWatched}
-              />
-            </>
-          )}
-        </Box>
-      </Main>
-    </>
-  );
+			{/* Main page content */}
+			<Main>
+				<Box>
+					<div className='box__heading'>
+						{/* fix prop drilling with component composition */}
+						<Search query={query} setQuery={setQuery} />
+						{/* fix prop drilling with component composition */}
+					</div>
+					{isLoading && <Loader />}
+					{!isLoading && !error && <MoviesList movies={movies} onSelect={handleSelectedMovie} />}
+					{error && <ErrorMessage message={error} />}
+				</Box>
+				<Box>
+					{selectedId ? (
+						<MovieDetails
+							selectedId={selectedId}
+							handleClosedMovie={handleClosedMovie}
+							onAddWatched={handleAddWatched}
+							watched={watched}
+						/>
+					) : (
+						<>
+							<div className='box__heading'>
+								<WatchedSummary watched={watched} />
+							</div>
+							<WatchedMoviesList watched={watched} onDeleteWatched={handleDeleteWatched} />
+						</>
+					)}
+				</Box>
+			</Main>
+		</>
+	);
 }
