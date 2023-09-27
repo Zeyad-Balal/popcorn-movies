@@ -92,22 +92,19 @@ const MovieDetails = ({ selectedId, handleClosedMovie, onAddWatched, watched }) 
 					<>
 						<header>
 							<button className='btn-back' onClick={handleClosedMovie}>
-								&larr;
+								x
 							</button>
 							<img src={poster} alt={`Poster of ${movie}`} />
+						</header>
+						<section className='detailes__content'>
 							<div className='details-overview'>
 								<h2>{title}</h2>
 								<p>
 									{released} &bull; {runtime}
 								</p>
 								<p> {genre} </p>
-								<p>
-									<span>🌟</span>
-									{imdbRating} IMDb Rating
-								</p>
+								<p>🌟 {imdbRating} IMDb Rating</p>
 							</div>
-						</header>
-						<section>
 							<div className='rating'>
 								{!isWatched ? (
 									<>
@@ -124,11 +121,16 @@ const MovieDetails = ({ selectedId, handleClosedMovie, onAddWatched, watched }) 
 									</p>
 								)}
 							</div>
-							<p>
-								<em> {plot} </em>
-							</p>
-							<p> Starring {actors} </p>
-							<p> Directed by {director} </p>
+							<div className='plot__section'>
+								<p>
+									<em> {plot} </em>
+								</p>
+								<p>
+									{' '}
+									Starring {actors}
+									<p> Directed by {director} </p>
+								</p>
+							</div>
 						</section>
 					</>
 				)}
