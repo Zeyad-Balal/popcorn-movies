@@ -108,12 +108,10 @@ const MovieDetails = ({ selectedId, handleClosedMovie, onAddWatched, watched }) 
 							<div className='rating'>
 								{!isWatched ? (
 									<>
-										<StarRating maxRating={10} size={24} onSetRating={setUserRating} />
-										{userRating > 0 && (
-											<button className='btn-add' onClick={handleAdd}>
-												+ Add to Watching List
-											</button>
-										)}
+										<p>
+											<em>🌟 Your Rate?</em>
+										</p>
+										<StarRating maxRating={10} size={24} onSetRating={setUserRating} className='stars' />
 									</>
 								) : (
 									<p>
@@ -131,6 +129,11 @@ const MovieDetails = ({ selectedId, handleClosedMovie, onAddWatched, watched }) 
 									<p> Directed by {director} </p>
 								</p>
 							</div>
+							{userRating > 0 && !isWatched && (
+								<button className='btn-add' onClick={handleAdd}>
+									+ Add to Watching List
+								</button>
+							)}
 						</section>
 					</>
 				)}
